@@ -1,0 +1,11 @@
+[Unit]
+Description=Daemon service based on the Frameworkd SDK to comunicate via UART
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/uartd
+ExecReload=/bin/kill -HUP $MAINPID
+SyslogIdentifier=uartd
+
+[Install]
+WantedBy=multi-user.target

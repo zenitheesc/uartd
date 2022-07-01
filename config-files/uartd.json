@@ -1,0 +1,27 @@
+{
+	"serviceId": "uartd",
+	"proxys": {
+		"uartd": {}
+	},
+	"data": {},
+    "can_bus_id" : "vcan0",
+    "actions": {
+        "0X0D0": {
+                "who": "serverd",
+                "method": "request",
+                "answer": {
+                    "start_id": "0x0D1",
+                    "end_id": "0x0DD"
+            }
+        },
+        "0x0F5": {
+                "who": "uartd",
+                "method": "heartbeat",
+                "answer": {
+                    "start_id": "0x0F7",
+                    "end_id": "0x0F7"
+            }
+        }
+    },
+    "file": "/dev/pts/4"
+}
