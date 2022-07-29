@@ -5,10 +5,11 @@ cmake_minimum_required(VERSION 3.15)
 #
 
 project(
-  "Project"
+  uartd
   VERSION 0.1.0
   LANGUAGES CXX
 )
+set(CMAKE_CXX_STANDARD 17)
 
 #
 # Set project options
@@ -157,23 +158,30 @@ include(cmake/Doxygen.cmake)
 #
 
 # Identify and link with the specific "packages" the project uses
-#find_package(package_name package_version REQUIRED package_type [other_options])
-#target_link_libraries(
-#  ${PROJECT_NAME}
-#  PUBLIC
-#    dependency1 ...
-#  PRIVATE
-#    dependency2 ...
+
+find_package(sdbus-c++ REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(frameworkd REQUIRED)
+
+target_link_libraries(
+  ${PROJECT_NAME}
+  PUBLIC
+  PRIVATE
+    SDBusCpp::sdbus-c++
+    nlohmann_json::nlohmann_json
+    frameworkd::frameworkd
 #    ${PROJECT_NAME}_PROJECT_OPTIONS
 #    ${PROJECT_NAME}_PROJECT_WARNINGS
-#)
-#if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-#  target_link_libraries(
-#    ${PROJECT_NAME}_LIB
-#    PUBLIC
-#      dependency1 ...
-#  )
-#endif()
+)
+if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
+  target_link_libraries(
+    ${PROJECT_NAME}_LIB
+    PUBLIC
+      SDBusCpp::sdbus-c++
+      nlohmann_json::nlohmann_json
+      frameworkd::frameworkd
+  )
+endif()
 
 # For Windows, it is necessary to link with the MultiThreaded library.
 # Depending on how the rest of the project's dependencies are linked, it might be necessary

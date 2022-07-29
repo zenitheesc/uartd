@@ -1,16 +1,15 @@
 set(sources
-    src/tmp.cpp
 )
 
 set(exe_sources
-		src/main.cpp
-		${sources}
+    ${sources}
+    src/uartd.cpp
 )
 
 set(headers
-    include/project/tmp.hpp
+    include/uartd/functions.hpp
+    include/uartd/function-handler.hpp
 )
 
 set(test_sources
-  src/tmp_test.cpp
 )
