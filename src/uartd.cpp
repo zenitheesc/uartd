@@ -13,6 +13,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <termio.h>
+#include <thread>
 #include <unistd.h>
 
 #include "uartd/function-handler.hpp"
@@ -99,16 +100,18 @@ public:
                 printf("%02hhx", byte);
                 std::cout << ",";
             }
-            std::cout << "\n";
+            std::cout << std::endl;
         }
 
-        std::cout << "\n";
+        std::cout << std::endl;
 
-        unsigned int startID = static_cast<unsigned int>(std::strtoul(static_cast<std::string>(serviceJson["answer"]["start_id"]).c_str(), nullptr, 16));
-        unsigned int endID = static_cast<unsigned int>(std::strtoul(static_cast<std::string>(serviceJson["answer"]["end_id"]).c_str(), nullptr, 16));
+        uint16_t startID = static_cast<uint16_t>(std::strtoul(static_cast<std::string>(serviceJson["answer"]["start_id"]).c_str(), nullptr, 16));
+        uint16_t endID = static_cast<uint16_t>(std::strtoul(static_cast<std::string>(serviceJson["answer"]["end_id"]).c_str(), nullptr, 16));
 
-        for (unsigned int i = startID; i <= endID && !dataFrames[i - startID].empty(); i++) {
+        for (uint16_t i = startID; i < endID; i++) {
+            write(m_serialFd, &i, sizeof(uint16_t));
             write(m_serialFd, dataFrames[i - startID].data(), dataFrames[i - startID].size());
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     }
 

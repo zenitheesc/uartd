@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-using message_t = std::vector<std::vector<char>>;
+using message_t = std::vector<std::array<char,8>>;
 
 class FunctionHandler {
     static std::map<std::string, message_t (*)(const nlohmann::json&)> m_functionMap;
