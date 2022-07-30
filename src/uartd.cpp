@@ -13,6 +13,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <termio.h>
+#include <thread>
 #include <unistd.h>
 
 #include "uartd/function-handler.hpp"
@@ -110,6 +111,7 @@ public:
         for (uint16_t i = startID; i < endID; i++) {
             write(m_serialFd, &i, sizeof(uint16_t));
             write(m_serialFd, dataFrames[i - startID].data(), dataFrames[i - startID].size());
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     }
 
