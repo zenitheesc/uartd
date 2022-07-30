@@ -100,10 +100,10 @@ public:
                 printf("%02hhx", byte);
                 std::cout << ",";
             }
-            std::cout << "\n";
+            std::cout << std::endl;
         }
 
-        std::cout << "\n";
+        std::cout << std::endl;
 
         uint16_t startID = static_cast<uint16_t>(std::strtoul(static_cast<std::string>(serviceJson["answer"]["start_id"]).c_str(), nullptr, 16));
         uint16_t endID = static_cast<uint16_t>(std::strtoul(static_cast<std::string>(serviceJson["answer"]["end_id"]).c_str(), nullptr, 16));
