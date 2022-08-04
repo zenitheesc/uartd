@@ -13,7 +13,6 @@ REGISTER_FUNCTION(request, [](const nlohmann::json& json) {
     res.resize(size);
 
     for (size_t i = 0; i < message.size(); i += 8) {
-        res[i / 8].resize(std::min(static_cast<size_t>(8), message.size() - i));
         std::memcpy(res[i / 8].data(), message.data() + i, std::min(static_cast<size_t>(8), message.size() - i));
     }
 
